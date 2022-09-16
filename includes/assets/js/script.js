@@ -1,8 +1,8 @@
 
 var create_folder = document.getElementById('create_folder');
-if (create_folder !== null){
-	create_folder.addEventListener('click', createNewFolder);
-}
+create_folder?.addEventListener('click', createNewFolder);
+
+
 function createNewFolder() {
 	var folder_name = document.getElementById('folder_name').value;
 	
@@ -36,21 +36,17 @@ function createNewFolder() {
 
 function loadFolders() {
 	fetch('controllers/fetchAllFolders.php')
-	.then((response) => response.text())
+	.then((response) => response.json())
 	.then((data) => {
-		console.log(data[0]);
 		var folders = document.getElementById('folders');
-
-		var i;
-		for(i in data){
-			// var a = folders.createElement += `<button class='btn btn-info'>`+ data +`</button>`;
-			console.log(data);
+		var button = '';
+		for(let i=0; i<data.length; i++){
+			button += `<button class='btn btn-info m-1'>` + data[i].directory_name + `</button>`;
 		}
-
-		// folders.innerHTML = a;
-
+		
+		folders.innerHTML = button;
 
 	})
 }
-
+createNewFolder();
 loadFolders();
